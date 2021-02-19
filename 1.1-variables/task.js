@@ -7,9 +7,9 @@
 
 function averageMark(a, g, p) {
 	
-    let algebra = a;
-		let geography = g;
-		let physics = p;
+  let algebra = a;
+	let geography = g;
+	let physics = p;
 
 	return (algebra + geography + physics) / 3;
 }
@@ -26,5 +26,5 @@ function calculateFormula(x = 2, y = 22, z = 0) {
     
 	let result = x * y + 5 * z + x - 1;
     
-    return result;
+  return result;
 }
