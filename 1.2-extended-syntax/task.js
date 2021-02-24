@@ -57,7 +57,7 @@ function askDrink(name, dateOfBirthday) {
 
     if (ageMonths > 216  || (ageMonths === 216 && currentDay >= birthDay)) {
         alert(`Не желаете ли олд-фэшн, ${name}?`)
-    } else if (ageMonths > 0 && currentDay >= birthDay) {
+    } else if (ageMonths > 0 || (ageMonths === 0 && currentDay >= birthDay)) {
         alert(`Сожалею, ${name}, но я не могу вам продать алкоголь. Могу предложить вам замечательный клюквенный компот!`)
     } else {
         alert(`Простите, ${name}, но Вы еще не родились. Давайте не будем торопить события.`)
