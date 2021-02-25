@@ -2,15 +2,6 @@
 
 function getResult(a, b, c) {
 
-    a = +a;
-    b = +b;
-    c = +c;
-
-    if (typeof(a) != 'number' || typeof(b) != 'number' || typeof(c) != 'number') {
-        console.error('Некорректно заданы аргументы');
-        return;
-    }
-
     const result = [];
 
     let D = Math.pow(b, 2) - 4 * a * c;
