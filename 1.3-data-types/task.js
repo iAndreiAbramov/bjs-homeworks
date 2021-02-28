@@ -2,9 +2,30 @@
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
 
+    // Проверяем корректность поля percent
+    if (!percent && percent !== 0) return 'Заполните поле "Процентная ставка"';
     percent = 0.01 * percent;
+    if (percent < 0) return 'Процентная ставка по кредиту не может быть отрицательной';
+    if (typeof percent !== 'number' || percent !== percent) return 'Некорректные данные в поле "Процентная ставка"';
+
+    // Проверяем корректность поля contribution
+    if (!contribution && contribution !== 0) return 'Заполните поле "Начальный взнос"';
     contribution = +contribution;
+    if (contribution < 0) return 'Начальный взнос не может быть отрицательным';
+    if (typeof contribution != 'number' || contribution != contribution) return 'Некорректные данные в поле "Начальный взнос"';
+
+    // Проверяем корректность поля amount
+    if (!amount && amount !== 0) return 'Заполните поле "Общая стоимость"';
     amount = +amount;
+    if (amount <= 0) return 'Общая стоимость должна быть больше нуля';
+    if (typeof amount != 'number' || amount !== amount) return 'Некорректные данные в поле "Общая стоимость"';
+
+    if (contribution > amount) {
+        return 'Сумма начального взноса не может быть меньше суммы кредита';
+    }
+
+    // Проверяем корректность поля date
+    if (!date.getDate()) return 'Укажите дату погашения кредита';
 
     const currentDate = new Date();
 
@@ -16,17 +37,8 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
     let termInMonths = (targetYear - currentYear) * 12 + (targetMonth - currentMonth); // Срок кредита в месяцах
 
-    termInMonths = (termInMonths === 0) ? 1 : termInMonths; // Если выплата кредита будет в том же месяце, в котором кредит был выдан, то будем считать сроком кредита 1 месяц во избежание математических коллизий.
-
-    if ([percent, contribution, amount, termInMonths].some(item => isNaN(item) || item < 0)) {
-        console.error('Некорректные данные');
-        return;
-    }
-
-    if (contribution > amount) {
-        console.error('Сумма первоначального взноса больше суммы кредита');
-        return;
-    }
+    if (termInMonths === 0) termInMonths = 1; // Если выплата кредита будет в том же месяце, в котором кредит был выдан, то будем считать сроком кредита 1 месяц во избежание математических коллизий.
+    if (termInMonths < 0) return 'Срок кредита не может быть отрицательным';
 
     const monthlyPercent = percent / 12;
     const creditBody = amount - contribution;
@@ -42,16 +54,12 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
     const totalAmount = monthlyPayment * termInMonths;
 
-    console.log(+totalAmount.toFixed(2));
     return +totalAmount.toFixed(2);
 }
 
 function getGreeting(name) {
 
-    // Проще, конечно, было бы задать name = 'Аноним' в качестве значения аргумента по умолчанию, но раз уж в условии требуется проверка:)...
+    if (!name || !name.trim()) name = 'Аноним';
 
-    name = (name) ? name : 'Аноним';
-
-    console.log(`Привет, мир! Меня зовут ${name}.`);
     return `Привет, мир! Меня зовут ${name}.`;
 }
