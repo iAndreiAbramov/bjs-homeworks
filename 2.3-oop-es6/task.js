@@ -12,7 +12,7 @@ class PrintEditionItem {
   }
 
   fix() {
-    if (this.state * 1.5 > 100) {
+    if (this._state * 1.5 > 100) {
       this._state = 100;
     } else {
       this._state = this.state * 1.5;
@@ -105,7 +105,7 @@ class Library {
 class StudentLog {
   constructor(name) {
     this.name = name;
-    this.grades = {};
+    this._grades = {};
   }
 
   getName() {
@@ -116,18 +116,18 @@ class StudentLog {
     const incorrectGrades = (/[^1-5]|[1-5]{2}/);
     if (incorrectGrades.test(grade)) {
       return `Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`
-    } else if (this.grades[subject]) {
-      this.grades[subject].push(grade);
-      return this.grades[subject].length;
+    } else if (this._grades[subject]) {
+      this._grades[subject].push(grade);
+      return this._grades[subject].length;
     } else {
-      this.grades[subject] = [grade];
+      this._grades[subject] = [grade];
       return 1;
     }
   }
 
   getAverageBySubject(subject) {
-    if (Object.keys(this.grades).includes(subject)) {
-      return this.grades[subject].reduce((akk, elem) => akk += elem, 0) / this.grades[subject].length;
+    if (Object.keys(this._grades).includes(subject)) {
+      return this._grades[subject].reduce((akk, elem) => akk += elem, 0) / this._grades[subject].length;
     } else {
       return 0;
     }
@@ -135,10 +135,10 @@ class StudentLog {
 
   getTotalAverage() {
       let totalAverage = 0;
-      for (let item in this.grades) {
+      for (let item in this._grades) {
         totalAverage += this.getAverageBySubject(item);
       }
-      totalAverage = totalAverage / Object.keys(this.grades).length;
+      totalAverage = totalAverage / Object.keys(this._grades).length;
       return totalAverage;
     }  
 }
