@@ -113,7 +113,7 @@ class StudentLog {
   }
 
   addGrade(grade, subject) {
-    const incorrectGrades = (/[^1-5]?[1-5]./g);
+    const incorrectGrades = (/[^1-5]|[1-5]{2}/);
     if (incorrectGrades.test(grade)) {
       return `Вы пытались поставить оценку "${grade}" по предмету "${subject}". Допускаются только числа от 1 до 5.`
     } else if (this.grades[subject]) {
@@ -145,12 +145,12 @@ class StudentLog {
 
 // const log = new StudentLog('Олег Никифоров');
 
-// log.addGrade(2, 'algebra');
+// log.addGrade('g2', 'algebra');
 // log.addGrade(4, 'algebra');
-// log.addGrade(15, 'geometry');
+// log.addGrade(155, 'geometry');
 // log.addGrade(4, 'geometry');
 // log.addGrade(8, 'geometry');
-// log.addGrade('p', 'geometry');
+// log.addGrade('p5', 'geometry');
 
 // console.log(log.getAverageBySubject('geometry')); // 4.5
 // console.log(log.getAverageBySubject('algebra')); // 3
