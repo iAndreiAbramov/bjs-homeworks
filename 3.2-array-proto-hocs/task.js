@@ -22,7 +22,7 @@ function memorize(fn, limit) {
   if (limit <= 0 || typeof limit !== 'number' || limit !== limit) limit = 1;
   return function() {
     const indexInMemory = memory.findIndex(item => compareArrays(item.args, [...arguments]));
-    if (memory.length > 0 && indexInMemory !== -1) return memory[indexInMemory].result;
+    if (indexInMemory !== -1) return memory[indexInMemory].result;
     if (memory.length >= limit) memory.shift();
     const result = fn(...arguments);
     memory.push({ args: [...arguments], result });
@@ -45,7 +45,7 @@ function memorize(fn, limit) {
 function testCase(numberOfCases) {
   const testArray = [];
 
-  // Создадим массив, содержащий случайные подмассивы. Количество случайных подмассивов - numberOfCases (если numberOfCases - четное), и numberOfCases + 1 (если numberOfCases - нечетное). Длина случайного подмассива - элементов.
+  // Создадим массив, содержащий случайные подмассивы. Количество случайных подмассивов - numberOfCases (если numberOfCases - четное), и numberOfCases + 1 (если numberOfCases - нечетное). Длина случайного подмассива - от 1 до 5 элементов.
   // Случайные подмассивы внутри тестового массива идут повторяющимися парами
 
   for (let i = 0; i <= Math.round(numberOfCases / 2); i++) {
@@ -79,7 +79,7 @@ function testCase(numberOfCases) {
 
 // testCase(10);
 // testCase(50);
-testCase(100);
+// testCase(100);
 
 // ВЫВОДЫ ПО ТЕСТИРОВАНИЮ
 // 1. В случае, когда для выполнения базовой функции установлена задержка на выполнение (например 100мс) оптимизированная функция завершается быстрее, причем прирост производительности напрямую коррелирует с повторяемостью аргументов в области запоминания функцией memorize, а также со временем выполнения самой базовой функции, которое мы имитуруем, устанавливая задержку.
@@ -89,4 +89,3 @@ testCase(100);
 // 3. Если тестовый массив и все подмасивы полностью случайны (количество совпадений стремится к нулю), то оптимизация не имеет смысла. В лучшем случае результат получается почти таким таким же (немного хуже), как у неоптимизированного варианта. В худшем мы получаем кратное замедление.
 
 // 4. Общий вывод. Оптимизировать имеет смысл только повторяющиеся операции и только в случае, если время выполнения этих операций больше времени, необходимого на поиск результатов в памяти.
-
