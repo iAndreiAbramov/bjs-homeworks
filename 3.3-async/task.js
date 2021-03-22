@@ -71,9 +71,12 @@ function testCase() {
 
   const alarm1 = new AlarmClock();
   
-  const alarmFn = function() {
-    console.log('alarm1: извольте вставать, барин');
+  function alarmFn(message) {
+    console.log(message);
   }
+
+  const alarmFn1 = alarmFn('alarm1: извольте вставать, барин');
+  const alarmFn2 = alarmFn('alarm2: извольте вставать, барин');
 
   function getCurrentFormattedTime() {
     const now = new Date();
@@ -93,20 +96,24 @@ function testCase() {
   const timePlusTwoMin = getFormattedTestTime(2);
 
   
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 1);
-  alarm1.addClock(getFormattedTestTime(1), alarmFn, 1);
-  alarm1.addClock(getFormattedTestTime(1), alarmFn, 2);
-  alarm1.addClock(getFormattedTestTime(1), alarmFn, 3);
-  alarm1.addClock(getFormattedTestTime(2), alarmFn, 4);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn1, 1);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn1, 1);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn2, 2);
+  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 3);
+  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 4);
+  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 5);
+  // alarm1.addClock(getFormattedTestTime(2), alarmFn, 6);
 
   alarm1.printAlarms();
-  
-  alarm1.removeClock(4);
 
-  alarm1.printAlarms();
-  
-  console.log(alarm1);
   alarm1.start();
+  
+  alarm1.removeClock(2);
+
+  alarm1.printAlarms();
+  
+  // console.log(alarm1);
+  // alarm1.start();
   
   // alarm1.clearAlarms();
   // alarm1.printAlarms();
