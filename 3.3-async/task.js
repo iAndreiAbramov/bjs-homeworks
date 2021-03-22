@@ -35,7 +35,7 @@ class AlarmClock {
     if (this.timerId === null) {
       this.timerId = setInterval(() => {
         this.alarmCollection.forEach(alarm => checkClock(alarm));
-      }, 10);
+      }, 1000);
     }
 
     const checkClock = (alarm) => {
@@ -96,23 +96,21 @@ function testCase() {
   const timePlusTwoMin = getFormattedTestTime(2);
 
   
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn1, 1);
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn1, 1);
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn2, 2);
-  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 3);
-  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 4);
-  // alarm1.addClock(getFormattedTestTime(1), alarmFn, 5);
-  // alarm1.addClock(getFormattedTestTime(2), alarmFn, 6);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 1);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 2);
+  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 2);
+  alarm1.addClock(getFormattedTestTime(1), alarmFn, 3);
+  alarm1.addClock(getFormattedTestTime(2), alarmFn, 3);
 
   alarm1.printAlarms();
 
   alarm1.start();
+  // alarm1.stop();
   
-  alarm1.removeClock(2);
+  // alarm1.removeClock(3);
 
-  alarm1.printAlarms();
+  // alarm1.printAlarms();
   
-  // console.log(alarm1);
   // alarm1.start();
   
   // alarm1.clearAlarms();
