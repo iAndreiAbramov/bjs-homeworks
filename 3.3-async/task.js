@@ -12,9 +12,9 @@ class AlarmClock {
     if (!id) throw new Error('Невозможно идентифицировать будильник, параметр id не передан');
 
     if (this.alarmCollection.some(alarm => alarm.id == id)) {
-        console.error('Будильник с таким id уже существует');
-        return;
-      }
+      console.error('Будильник с таким id уже существует');
+      return;
+    }
 
     this.alarmCollection.push({ alarmTime, fn, id });
   }
@@ -41,11 +41,10 @@ class AlarmClock {
     const checkClock = (alarm) => {
       if (this.getCurrentFormattedTime() === alarm.alarmTime) {
         alarm.fn();
-        this.stop();
       }
     }
   }
-  
+
   stop() {
     if (this.timerId !== undefined) {
       clearInterval(this.timerId);
@@ -69,52 +68,23 @@ class AlarmClock {
 
 function testCase() {
 
-  const alarm1 = new AlarmClock();
-  
-  function alarmFn(message) {
-    console.log(message);
-  }
+  const alarm = new AlarmClock();
 
-  const alarmFn1 = alarmFn('alarm1: извольте вставать, барин');
-  const alarmFn2 = alarmFn('alarm2: извольте вставать, барин');
+  alarm.addClock('16:30', () => console.log('Вставай'), 1);
 
-  function getCurrentFormattedTime() {
-    const now = new Date();
-    const hours = now.getHours() < 10 ? `0${now.getHours()}` : `${now.getHours()}`;
-    const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : `${now.getMinutes()}`;
-    return `${hours}:${minutes}`;
-  }
+  alarm.addClock('16:31', () => {
+    console.log('Вставай, а то проспишь');
+    alarm.removeClock(2);
+  }, 2);
 
-  function getFormattedTestTime(delay) {
-    const now = new Date();
-    const hours = now.getHours() < 10 ? `0${now.getHours()}` : `${now.getHours()}`;
-    const minutes = now.getMinutes() < 10 ? `0${now.getMinutes()}` : `${now.getMinutes()}`;
-    return `${hours}:${+minutes + +delay}`;
-  }
+  alarm.addClock('16:32', () => {
+    console.log('Вставай');
+    alarm.clearAlarms();
+    alarm.printAlarms();
+  }, 3);
 
-  const timePlusOneMin = getFormattedTestTime(1);
-  const timePlusTwoMin = getFormattedTestTime(2);
+  alarm.start();
 
-  
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 1);
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 2);
-  alarm1.addClock(getCurrentFormattedTime(), alarmFn, 2);
-  alarm1.addClock(getFormattedTestTime(1), alarmFn, 3);
-  alarm1.addClock(getFormattedTestTime(2), alarmFn, 3);
-
-  alarm1.printAlarms();
-
-  alarm1.start();
-  // alarm1.stop();
-  
-  // alarm1.removeClock(3);
-
-  // alarm1.printAlarms();
-  
-  // alarm1.start();
-  
-  // alarm1.clearAlarms();
-  // alarm1.printAlarms();
 }
 
 testCase();
